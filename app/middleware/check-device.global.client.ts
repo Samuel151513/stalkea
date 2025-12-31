@@ -7,21 +7,12 @@ export default defineNuxtRouteMiddleware((to) => {
         return
     }
 
-    let userAgent = ''
-
-    if (import.meta.server) {
-        // On server, get UA from headers
-        const headers = useRequestHeaders(['user-agent'])
-        userAgent = headers['user-agent'] || ''
-    } else {
-        // On client, get UA from navigator
-        userAgent = navigator.userAgent
-    }
+    const userAgent = navigator.userAgent
 
     // Comprehensive mobile regex
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
 
-    console.log('Device Check:', { path: to.path, userAgent, isMobile, server: import.meta.server })
+    console.log('Device Check:', { path: to.path, userAgent, isMobile })
 
     // If not mobile, redirect to mobile-only page
     if (!isMobile) {
