@@ -71,7 +71,7 @@
                <!-- Blurred Items -->
                <div v-for="i in 4" :key="i" class="aspect-square bg-zinc-900 rounded-2xl overflow-hidden relative border border-gray-800">
                    <!-- Fake blurred content -->
-                    <img :src="`https://picsum.photos/seed/${i+10}/200`" class="w-full h-full object-cover opacity-20 blur-md scale-110" />
+                    <img :src="getProxyUrl(`https://picsum.photos/seed/${i+10}/200`)" class="w-full h-full object-cover opacity-20 blur-md scale-110" />
                     <div class="absolute inset-0 flex items-center justify-center">
                         <UIcon name="i-lucide-lock" class="w-6 h-6 text-white/70" />
                     </div>
@@ -126,7 +126,7 @@
 
           <div class="flex gap-3 justify-center">
               <div v-for="i in 2" :key="`story-${i}`" class="w-[140px] h-[220px] bg-zinc-900 rounded-2xl border border-gray-800 relative overflow-hidden">
-                   <img :src="`https://picsum.photos/seed/${i+55}/300/500`" class="w-full h-full object-cover opacity-20 blur-md" />
+                   <img :src="getProxyUrl(`https://picsum.photos/seed/${i+55}/300/500`)" class="w-full h-full object-cover opacity-20 blur-md" />
                    <div class="absolute inset-0 flex flex-col items-center justify-center gap-2">
                        <UIcon name="i-lucide-lock" class="w-8 h-8 text-white/80" />
                        <span class="text-[10px] text-white/80">Conteúdo restrito</span>
@@ -267,7 +267,7 @@
           <div class="bg-[#0f0f11] border border-gray-800 rounded-2xl p-5 relative">
                <div class="flex items-center gap-3 mb-3">
                    <div class="w-10 h-10 rounded-full bg-gray-700 p-[2px] bg-gradient-to-tr from-pink-500 to-purple-500">
-                       <img src="https://i.pravatar.cc/150?u=marcos" class="w-full h-full rounded-full border border-black" />
+                       <img :src="getProxyUrl('https://i.pravatar.cc/150?u=marcos')" class="w-full h-full rounded-full border border-black" />
                    </div>
                    <div class="flex flex-col">
                        <span class="font-bold text-sm text-white">Marcosvianad</span>
@@ -391,10 +391,7 @@ const modalTitle = ref('Tempo Esgotado')
 
 const userProfile = computed<PerfilBuscado | undefined>(() => feedData.value?.perfil_buscado)
 
-const getProxyUrl = (url: string) => {
-    if (!url) return ''
-    return `/api/proxy-image?url=${encodeURIComponent(url)}`
-}
+
 
 const goToCheckout = () => {
     navigateTo(CHECKOUT_URL, { external: true })

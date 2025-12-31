@@ -5,11 +5,8 @@ export class StalkeaService {
     private static readonly BASE_URL = '/api'
     private static cache = new Map<string, StalkeaResponse['data']>()
 
-    static async getProfile(username: string): Promise<StalkeaResponse['data']> {
+    static async getProfile(username: string): Promise<StalkeaResponse> {
         // Return cached data if available
-        if (this.cache.has(username)) {
-            return this.cache.get(username)!
-        }
 
         try {
             const response = await fetch(`${this.BASE_URL}/instagram?username=${username}`, {
@@ -23,10 +20,9 @@ export class StalkeaService {
                 throw new Error('Failed to fetch profile')
             }
 
-            const json = await response.json() as StalkeaResponse
+            const json = await response.json() as any
             // Cache the successful response
-            this.cache.set(username, json.data)
-            return json.data
+            return json
         } catch (error) {
             console.error('StalkeaService Error:', error)
             throw error
@@ -51,6 +47,7 @@ export class StalkeaService {
             }
 
             const json = await response.json() as InstagramFeedResponse
+            console.log('json', json)
             return json
         } catch (error) {
             console.error('StalkeaService Error:', error)

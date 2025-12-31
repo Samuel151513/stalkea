@@ -314,10 +314,7 @@ const getMaskedUsername = (name: string) => {
     return name.charAt(0) + '******'
 }
 
-const getProxyUrl = (url: string) => {
-    if (!url) return ''
-    return `/api/proxy-image?url=${encodeURIComponent(url)}`
-}
+
 
 const formatCaption = (text: string) => {
     if (!text) return ''

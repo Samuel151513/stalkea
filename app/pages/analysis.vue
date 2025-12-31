@@ -22,7 +22,7 @@
           <div class="w-20 h-20 rounded-full bg-[#2D2D33] overflow-hidden flex-shrink-0 ring-2 ring-[#7C4DFF]/20">
             <img 
               v-if="profile.profile_pic_url" 
-              :src="profile.profile_pic_url" 
+              :src="getProxyUrl(profile.profile_pic_url)" 
               :alt="profile.username"
               class="w-full h-full object-cover"
               @error="handleImageError"
@@ -142,18 +142,23 @@ const confirmAnalysis = () => {
 }
 
 onMounted(async () => {
+
+  if (username.value) {
+  
+       StalkeaService.getProfile(username.value).then( response  => {
+        console.log('response', response)
+        profile.value = response
+      })    
+  }
+
   setInterval(() => {
     const increment = Math.floor(Math.random() * 3)
     const current = parseInt(analyticsCount.value.replace(/\./g, ''))
     analyticsCount.value = (current + increment).toLocaleString('pt-BR')
   }, 1000)
+})
 
-  if (username.value) {
-    try {
-      profile.value = await StalkeaService.getProfile(username.value)
-    } catch (error) {
-      console.error('Failed to load profile:', error)
-    }
-  }
+watch(() => profile.value, () => {
+  console.log('profile v', profile.value)
 })
 </script>
