@@ -2,6 +2,9 @@
  * Global middleware to detect device type and restrict access to mobile devices only
  */
 export default defineNuxtRouteMiddleware((to) => {
+    if (import.meta.server) {
+        return
+    }
     // Skip if already on the mobile-only page to avoid redirect loops
     if (to.path === '/mobile-only') {
         return
