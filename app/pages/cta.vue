@@ -356,7 +356,9 @@
              <UIcon name="i-lucide-clock" class="w-12 h-12 text-purple-500" />
           </div>
           
-          <h3 class="text-white text-lg font-bold mb-3">Tempo Esgotado</h3>
+          <h3 class="text-white text-lg font-bold mb-3">
+             {{ modalTitle }}
+          </h3>
           
           <p class="text-gray-300 text-sm mb-6 leading-relaxed">
              Você só pode fazer uma busca, para espionar o perfil é necessário adquirir o plano vip
@@ -385,6 +387,7 @@ const username = ref(route.query.username as string)
 const feedData = ref<InstagramFeedResponse | null>(null)
 const matrixCanvas = ref<HTMLCanvasElement | null>(null)
 const showExpiredModal = ref(false)
+const modalTitle = ref('Tempo Esgotado')
 
 const userProfile = computed<PerfilBuscado | undefined>(() => feedData.value?.perfil_buscado)
 
@@ -440,9 +443,14 @@ const toggleFaq = (index: number) => {
 
 // Matrix Effect
 onMounted(async () => {
-    // Check if user was redirected due to expired access
-    if (route.query.expired === 'true') {
+    // Check if user was redirected due to expired access or search limit
+    if (route.query.expired === 'true' || route.query.reason === 'limit') {
         showExpiredModal.value = true
+        if (route.query.reason === 'limit') {
+            modalTitle.value = 'Busca Bloqueada'
+        } else {
+            modalTitle.value = 'Tempo Esgotado'
+        }
     }
     
     // Canvas Matrix
