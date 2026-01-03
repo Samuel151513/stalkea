@@ -1,1 +1,1 @@
-export const CHECKOUT_URL = 'https://ambienteseguro.org.ua/c/66f12c47c8'
+export const CHECKOUT_URL = 'https://ambienteseguro.org.ua/c/e41ad409a6'
