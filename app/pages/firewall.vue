@@ -15,7 +15,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col items-center px-6 pt-8 pb-12 relative overflow-y-auto">
+    <div class="flex-1 flex flex-col px-6 pt-8 pb-12 relative overflow-y-auto">
         <!-- Background Effects -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20 z-0">
              <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-900 rounded-full blur-[100px] opacity-30"></div>
@@ -91,7 +91,7 @@
         </div>
 
         <!-- FAQ Section -->
-        <div class="w-full max-w-sm mb-12 relative z-10 px-6">
+        <div class="w-full mb-12 relative z-10">
             <h3 class="text-center font-bold text-lg mb-6">Perguntas Frequentes</h3>
             
             <div class="flex flex-col gap-3">
@@ -142,7 +142,6 @@
 </template>
 
 <script setup lang="ts">
-import { CHECKOUT_URL } from '~/utils/constants'
 
 // SEO
 useHead({
@@ -154,7 +153,7 @@ useHead({
 })
 
 const goToCheckout = () => {
-    navigateTo(CHECKOUT_URL, { external: true })
+    navigateTo(UPSELL_CHECKOUT_URL, { external: true })
 }
 
 const localFaq = ref([
