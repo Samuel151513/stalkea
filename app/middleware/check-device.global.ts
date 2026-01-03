@@ -5,6 +5,12 @@ export default defineNuxtRouteMiddleware((to) => {
     if (import.meta.server) {
         return
     }
+
+    // Disable timer verification in development
+    if (import.meta.dev) {
+        return
+    }
+
     // Skip if already on the mobile-only page to avoid redirect loops
     if (to.path === '/mobile-only') {
         return
