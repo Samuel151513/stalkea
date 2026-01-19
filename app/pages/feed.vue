@@ -220,7 +220,7 @@
                  <span class="text-[10px] text-gray-400 leading-tight">Não saia ou recarregue essa página, a<br>espionagem não pode ser realizada novamente.</span>
              </div>
              
-             <button @click="goToCTA" class="bg-[#584cea] hover:bg-[#4a3fcb] text-white font-bold text-xs px-4 py-3 rounded-xl shadow-lg whitespace-nowrap leading-tight">
+             <button @click="handleVipClick" class="bg-[#584cea] hover:bg-[#4a3fcb] text-white font-bold text-xs px-4 py-3 rounded-xl shadow-lg whitespace-nowrap leading-tight">
                  Desbloquear<br>Acesso Agora
              </button>
         </div>
@@ -290,10 +290,6 @@ const handleVipClick = () => {
         query: { username: username.value }
     })
     showBlockedModal.value = false
-}
-
-const goToCTA = () => {
-  navigateTo('/cta')
 }
 
 // Timer Logic
