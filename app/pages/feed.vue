@@ -18,6 +18,11 @@
           <UIcon name="i-lucide-heart" class="w-7 h-7" />
           <span class="absolute top-0 right-0 bg-red-500 w-2.5 h-2.5 rounded-full border-2 border-black"></span>
         </button>
+
+        <button class="relative" @click="navigateTo({ path: '/direct', query: { username } })">
+           <svg aria-label="Mensagens" class="w-7 h-7" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Mensagens</title><path d="M13.973 20.046 21.77 6.928C22.8 5.195 21.55 3 19.535 3H4.466C2.138 3 .984 5.825 2.646 7.456l4.842 4.752 1.723 7.121c.548 2.266 3.571 2.721 4.762.717Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="7.488" x2="15.515" y1="12.208" y2="7.641"></line></svg>
+           <span class="absolute -top-1 -right-1 bg-red-600 text-[10px] font-bold px-1 h-3.5 min-w-[14px] flex items-center justify-center rounded-full border border-black">3</span>
+        </button>
       </div>
     </header>
 
@@ -172,7 +177,7 @@
     </div>
 
     <!-- Bottom Navigation -->
-    <nav class="bg-black border-t border-gray-800 h-[50px] px-6 flex justify-between items-center z-50 shrink-0">
+    <nav class="bg-black border-t border-gray-800 h-[65px] px-6 flex justify-between items-center z-50 shrink-0 relative">
       <button class="flex flex-col items-center justify-center w-10 h-full" @click="openBlockedModal">
         <UIcon name="i-lucide-home" class="w-7 h-7 text-white" /> 
       </button>
@@ -202,6 +207,24 @@
          </div>
       </button>
     </nav>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="absolute bottom-[65px] left-0 w-full bg-[#151517]/95 backdrop-blur-md border-t border-gray-800 p-4 z-40">
+        <div class="max-w-[450px] mx-auto flex items-center justify-between gap-4">
+             <div class="flex flex-col">
+                 <div class="flex items-center gap-2 text-white font-bold text-sm mb-0.5">
+                     <UIcon name="i-lucide-zap" class="w-4 h-4 fill-yellow-300 text-yellow-300" />
+                     <span>Oferta expira em {{ timerString }}</span>
+                     <UIcon name="i-lucide-clock" class="w-3.5 h-3.5 opacity-80" />
+                 </div>
+                 <span class="text-[10px] text-gray-400 leading-tight">Não saia ou recarregue essa página, a<br>espionagem não pode ser realizada novamente.</span>
+             </div>
+             
+             <button @click="goToCTA" class="bg-[#584cea] hover:bg-[#4a3fcb] text-white font-bold text-xs px-4 py-3 rounded-xl shadow-lg whitespace-nowrap leading-tight">
+                 Desbloquear<br>Acesso Agora
+             </button>
+        </div>
+    </div>
 
     <!-- Blocked Action Modal -->
     <div v-if="showBlockedModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-6">
@@ -269,6 +292,27 @@ const handleVipClick = () => {
     showBlockedModal.value = false
 }
 
+const goToCTA = () => {
+  navigateTo('/cta')
+}
+
+// Timer Logic
+const { getRemainingTime } = useAccessTimer()
+const remainingMs = ref(0) // Start at 0, will update immediately on mount
+
+const timerString = computed(() => {
+    const totalSeconds = Math.floor(remainingMs.value / 1000)
+    const mins = Math.floor(totalSeconds / 60)
+    const secs = totalSeconds % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+})
+
+let timerInterval: any
+
+onUnmounted(() => {
+    if (timerInterval) clearInterval(timerInterval)
+})
+
 // Story logic
 const storyLimit = 14
 
@@ -334,6 +378,11 @@ const formatDate = (timestamp: number) => {
 }
 
 onMounted(async () => {
+    // Timer
+    remainingMs.value = getRemainingTime()
+    timerInterval = setInterval(() => {
+        remainingMs.value = getRemainingTime()
+    }, 1000)
     
     try {
         loading.value = true

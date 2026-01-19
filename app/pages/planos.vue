@@ -126,6 +126,8 @@
 </template>
 
 <script setup lang="ts">
+import { PLANO_GOLD_URL, PLANO_DIAMONG_URL, PLANO_PREMIUM_URL } from '~/utils/constants'
+
 // Set dark mode
 const colorMode = useColorMode()
 colorMode.preference = 'dark'
@@ -157,9 +159,9 @@ const getParticleStyle = (index: number) => {
 // Handle plan selection
 const selectPlan = (plan: string) => {
   const links: Record<string, string> = {
-    'Gold': 'https://ambienteseguro.org.ua/c/239fc43a49',
-    'Diamond': 'https://ambienteseguro.org.ua/c/eaf9e8960d',
-    'Premium': 'https://ambienteseguro.org.ua/c/e5f3e48596'
+    'Gold': PLANO_GOLD_URL,
+    'Diamond': PLANO_DIAMONG_URL,
+    'Premium': PLANO_PREMIUM_URL
   }
 
   const url = links[plan]
