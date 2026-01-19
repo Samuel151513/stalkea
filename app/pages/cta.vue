@@ -210,7 +210,7 @@
                <!-- Price Box -->
                <div class="bg-[#161618] border border-purple-500/20 rounded-2xl p-4 text-center mb-6 relative">
                    <span class="text-gray-500 text-sm line-through block mb-1">De: R$ 279,90</span>
-                   <span class="text-4xl font-black text-purple-500">R$ 37<span class="text-2xl">,00</span></span>
+                   <span class="text-4xl font-black text-purple-500">R$ 27<span class="text-2xl">,00</span></span>
                    
                    <div class="flex justify-center gap-4 mt-3 text-[10px] text-gray-400">
                        <span class="flex items-center gap-1"><UIcon name="i-lucide-zap" class="w-3 h-3 text-purple-400" /> Acesso imediato</span>
