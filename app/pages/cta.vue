@@ -412,7 +412,7 @@
           <h3 class="text-white text-lg font-bold mb-2">Ação bloqueada</h3>
           
           <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-             Seja um membro VIP do Stalkea.ai para ter acesso aos stories
+             Seja um membro VIP do Stalkea.ai para ter acesso 
           </p>
           
           <button @click="goToCheckout" class="w-full bg-[#8A7178] hover:bg-[#9d828a] text-white font-semibold py-3 rounded-xl transition-colors">
