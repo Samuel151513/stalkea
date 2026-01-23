@@ -108,7 +108,7 @@
                    <span class="font-bold text-sm">Localização Atual</span>
                    <span class="text-xs">@{{ userProfile?.username || username }}</span>
                    
-                   <button @click="showBlockedModal = true" class="w-full mt-3 bg-[#2C2C2E] py-2 rounded-lg text-xs font-bold hover:bg-zinc-700 text-white border border-gray-600" style="width: 100%; cursor: pointer;">
+                   <button @click="goToPricingSection" class="w-full mt-3 bg-[#2C2C2E] py-2 rounded-lg text-xs font-bold hover:bg-zinc-700 text-white border border-gray-600" style="width: 100%; cursor: pointer;">
                        Ver
                    </button>
               </div>
@@ -179,7 +179,7 @@
                     </div>
 
                     <!-- CTA Button inside chat -->
-                    <button @click="showBlockedModal = true" class="bg-gradient-to-r from-purple-600 to-indigo-600 self-end rounded-full px-6 py-3 mt-2 shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+                    <button @click="goToPricingSection" class="bg-gradient-to-r from-purple-600 to-indigo-600 self-end rounded-full px-6 py-3 mt-2 shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
                         <span class="text-white font-bold text-sm">Boraa, vou comprar meu acesso VIP 🔥</span>
                     </button>
                     
@@ -189,7 +189,7 @@
       </div>
 
       <!-- Arrow Down -->
-      <div class="my-6 animate-bounce stomp-animation stomp-delay-9">
+      <div class="my-6 animate-bounce stomp-animation stomp-delay-9" id="pricing-section">
           <UIcon name="i-lucide-arrow-down" class="w-8 h-8 text-white" />
       </div>
 
@@ -399,32 +399,6 @@
     </div>
 
   </div>
-
-    <!-- Blocked Action Modal -->
-    <div v-if="showBlockedModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-6">
-       <div class="bg-[#1C1C1E] border border-gray-800 w-full max-w-[320px] rounded-2xl p-6 flex flex-col items-center text-center shadow-2xl relative">
-          <!-- Close click outside is standard, but maybe forced interaction? using button to close/navigate -->
-          
-          <div class="mb-4">
-             <UIcon name="i-lucide-triangle-alert" class="w-8 h-8 text-white" />
-          </div>
-          
-          <h3 class="text-white text-lg font-bold mb-2">Ação bloqueada</h3>
-          
-          <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-             Seja um membro VIP do Stalkea.ai para ter acesso 
-          </p>
-          
-          <button @click="goToCheckout" class="w-full bg-[#8A7178] hover:bg-[#9d828a] text-white font-semibold py-3 rounded-xl transition-colors">
-             Adquirir Acesso VIP
-          </button>
-          
-          <!-- Optional close button or click outside logic could go here, but for now strict modal -->
-          <button @click="showBlockedModal = false" class="absolute top-4 right-4 text-gray-500 hover:text-white">
-             <UIcon name="i-lucide-x" class="w-5 h-5" />
-          </button>
-       </div>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -498,7 +472,12 @@ const faqItems = ref([
     }
 ])
 
-const showBlockedModal = ref(false)
+function goToPricingSection () {
+    const pricingSection = document.getElementById('pricing-section')
+    if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: 'smooth' })
+    }
+}
 
 const toggleFaq = (index: number) => {
     const item = faqItems.value[index]
