@@ -1,5 +1,5 @@
-export const CHECKOUT_URL = 'https://seguroamplopay.com/checkout/cmkptnwkm06381rmiokrp9jf3?offer=XLAJ808'
-export const UPSELL_SIGILO_CHECKOUT_URL = 'https://seguroamplopay.com/checkout/cmkq2qlwa00tz1spku6vwsul8?offer=X5HH94R'
+export const CHECKOUT_URL = 'https://go.assetpay.com.br/pf5fjufehx'
+export const UPSELL_SIGILO_CHECKOUT_URL = 'https://go.assetpay.com.br/j4gl0v3npp'
 
 export const PLANO_GOLD_URL = 'https://ambienteseguro.org.ua/c/239fc43a49'
 export const PLANO_DIAMONG_URL = 'https://ambienteseguro.org.ua/c/eaf9e8960d'
