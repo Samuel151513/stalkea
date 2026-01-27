@@ -96,7 +96,7 @@
                         <p class="text-gray-500 text-[10px] line-through mb-1">R$ 97,90</p>
                         <div class="flex items-center justify-center gap-1 text-purple-500 font-bold">
                             <span class="text-sm">R$</span>
-                            <span class="text-4xl tracking-tighter">37</span>
+                            <span class="text-4xl tracking-tighter">27</span>
                             <span class="text-sm">,00</span>
                         </div>
                         <p class="text-gray-400 text-[10px] mt-1">Pagamento único</p>
