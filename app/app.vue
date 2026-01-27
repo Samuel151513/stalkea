@@ -46,3 +46,7 @@ watch(
   }
 )
 </script>
+
+<template>
+  <NuxtPage />
+</template>
