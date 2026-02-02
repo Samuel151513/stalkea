@@ -211,7 +211,7 @@
                <!-- Price Box -->
                <div class="bg-[#161618] border border-purple-500/20 rounded-2xl p-4 text-center mb-6 relative">
                    <span class="text-gray-500 text-sm line-through block mb-1">De: R$ 279,90</span>
-                   <span class="text-4xl font-black text-purple-500">R$ 24<span class="text-2xl">,90</span></span>
+                   <span class="text-4xl font-black text-purple-500">R$ 37<span class="text-2xl">,90</span></span>
                    
                    <div class="flex justify-center gap-4 mt-3 text-[10px] text-gray-400">
                        <span class="flex items-center gap-1"><UIcon name="i-lucide-zap" class="w-3 h-3 text-purple-400" /> Acesso imediato</span>
@@ -250,7 +250,7 @@
       <div class="w-full px-6 mb-8 stomp-animation stomp-delay-11">
           <button @click="goToCheckout" class="w-full bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9] rounded-2xl p-1 shadow-[0_0_20px_rgba(139,92,246,0.5)] group transform transition hover:scale-[1.02]" style="width: 100%; cursor: pointer;">
               <div class="bg-gradient-to-br from-[#7c3aed] to-[#5b21b6] rounded-[14px] py-4 px-6 flex flex-col items-center" style="display: flex; flex-direction: column; align-items: center;">
-                  <span class="text-md font-bold text-white mb-1">Acessar tudo agora mesmo por R$24,90</span>
+                  <span class="text-md font-bold text-white mb-1">Acessar tudo agora mesmo por R$37,00</span>
                   <span class="text-xs text-purple-200">Acesso liberado em até 2 minutos</span>
               </div>
           </button>
