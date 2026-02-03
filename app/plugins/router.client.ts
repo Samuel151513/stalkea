@@ -1,18 +1,30 @@
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(() => {
   if (process.server) return
 
-  nuxtApp.$router.beforeEach((to, from, next) => {
-    const saved = localStorage.getItem('utm_params')
+  const router = useRouter()
 
-    if (saved && Object.keys(to.query).length === 0) {
-      const params = Object.fromEntries(new URLSearchParams(saved))
-      next({
+  router.beforeEach((to) => {
+    const saved = localStorage.getItem('utm_params')
+    if (!saved) return
+
+    const savedObj = Object.fromEntries(new URLSearchParams(saved))
+
+    // Mantém o que já veio na URL (to.query) e completa com o que está salvo
+    const merged = { ...savedObj, ...(to.query as Record<string, any>) }
+
+    // Se a rota já tem tudo, não mexe
+    const toKeys = Object.keys(to.query || {})
+    const mergedKeys = Object.keys(merged || {})
+    const same =
+      toKeys.length === mergedKeys.length &&
+      toKeys.every((k) => String((to.query as any)[k]) === String((merged as any)[k]))
+
+    if (!same) {
+      return {
         path: to.path,
-        query: params,
+        query: merged,
         hash: to.hash,
-      })
-    } else {
-      next()
+      }
     }
   })
 })
