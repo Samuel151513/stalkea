@@ -2,30 +2,21 @@
  * Global middleware to detect device type and restrict access to mobile devices only
  */
 export default defineNuxtRouteMiddleware((to) => {
-    if (import.meta.server) {
-        return
-    }
+  if (import.meta.server) return
+  if (import.meta.dev) return
 
-    // Disable timer verification in development
-    if (import.meta.dev) {
-        return
-    }
+  if (to.path === '/mobile-only') return
 
-    // Skip if already on the mobile-only page to avoid redirect loops
-    if (to.path === '/mobile-only') {
-        return
-    }
+  const userAgent = navigator.userAgent
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
 
-    const userAgent = navigator.userAgent
+  if (!isMobile) {
+    // preserva query ao redirecionar externamente
+    const qs = new URLSearchParams(to.query as Record<string, any>).toString()
+    const target = qs
+      ? `https://stalkea-theta.vercel.app/?${qs}`
+      : `https://stalkea-theta.vercel.app/`
 
-    // Comprehensive mobile regex
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
-
-    console.log('Device Check:', { path: to.path, userAgent, isMobile })
-
-    // If not mobile, redirect to mobile-only page
-    if (!isMobile) {
-        console.log('Redirecting to google')
-        return navigateTo('https://stalkea-theta.vercel.app', { external: true })
-    }
+    return navigateTo(target, { external: true })
+  }
 })
