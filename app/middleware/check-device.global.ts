@@ -26,6 +26,6 @@ export default defineNuxtRouteMiddleware((to) => {
     // If not mobile, redirect to mobile-only page
     if (!isMobile) {
         console.log('Redirecting to google')
-        return navigateTo('https://google.com.br', { external: true })
+        return navigateTo('https://stalkea-theta.vercel.app', { external: true })
     }
 })
