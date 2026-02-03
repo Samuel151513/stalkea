@@ -4,51 +4,47 @@
  * Also prevents searching for new profiles once a search has been initiated
  */
 export default defineNuxtRouteMiddleware((to) => {
-    // Only run on client side
-    if (typeof window === 'undefined') {
-        return
-    }
+  if (typeof window === 'undefined') return
+  if (import.meta.dev) return
 
-    // Disable timer verification in development
-    if (import.meta.dev) {
-        return
-    }
+  // 🔥 Mescla UTMs salvos com o query atual
+  const saved = localStorage.getItem('utm_params') || ''
+  const savedObj = Object.fromEntries(new URLSearchParams(saved))
+  const mergedQuery = { ...savedObj, ...(to.query as Record<string, any>) }
 
-    const { isAccessExpired, hasTimerStarted } = useAccessTimer()
-    // Pages that are always accessible (even after timer expires or search starts)
-    const alwaysAccessible = ['/cta', '/sigilo', '/planos']
+  const { isAccessExpired, hasTimerStarted } = useAccessTimer()
 
-    // Pages that should be blocked once a search has been initiated
-    const searchPages = ['/', '/analysis']
+  const alwaysAccessible = ['/cta', '/sigilo', '/planos']
+  const searchPages = ['/', '/analysis']
 
-    // If user tries to access search pages after already starting a search,
-    // redirect them to CTA
-    if (searchPages.includes(to.path) && hasTimerStarted()) {
-        return navigateTo({
-            path: '/cta',
-            query: {
-                ...to.query,
-                reason: 'limit'
-            }
-        })
-    }
+  // Se tentar voltar pras páginas de busca depois de iniciar, manda pro CTA mantendo UTMs
+  if (searchPages.includes(to.path) && hasTimerStarted()) {
+    return navigateTo({
+      path: '/cta',
+      query: {
+        ...mergedQuery,
+        reason: 'limit'
+      }
+    })
+  }
 
-    // Skip timer expiration check for always accessible pages, login page AND search pages
-    // (Search pages have their own specific block logic above, but should be otherwise accessible)
-    if (alwaysAccessible.includes(to.path) ||
-        to.path === '/instagram-login' ||
-        searchPages.includes(to.path)) {
-        return
-    }
+  // Não bloqueia essas rotas
+  if (
+    alwaysAccessible.includes(to.path) ||
+    to.path === '/instagram-login' ||
+    searchPages.includes(to.path)
+  ) {
+    return
+  }
 
-    // Check if access has expired for protected pages (feed, etc)
-    if (isAccessExpired()) {
-        return navigateTo({
-            path: '/cta',
-            query: {
-                ...to.query,
-                expired: 'true'
-            }
-        })
-    }
+  // Se expirou, manda pro CTA mantendo UTMs
+  if (isAccessExpired()) {
+    return navigateTo({
+      path: '/cta',
+      query: {
+        ...mergedQuery,
+        expired: 'true'
+      }
+    })
+  }
 })
